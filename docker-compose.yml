@@ -12,6 +12,8 @@ services:
         soft: -1
         hard: -1
     user: 'elasticsearch'
+    ports:
+      - "9200:9200"
   kibana:
     image: "docker.elastic.co/kibana/kibana:7.1.0"
     depends_on:

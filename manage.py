@@ -2,12 +2,14 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from elasticsearch_dsl.connections import connections
 
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'website.settings')
     try:
         from django.core.management import execute_from_command_line
+        connections.create_connection(alias="local", hosts=['localhost:9200'])
     except ImportError as exc:
         raise ImportError(
             "Couldn't import Django. Are you sure it's installed and "
