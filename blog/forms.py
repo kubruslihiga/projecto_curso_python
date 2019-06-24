@@ -1,9 +1,9 @@
 from django import forms
 from blog.models import Category
 
-all_categories = []
-for c in Category.objects.all():
-    all_categories.append((c.pk, c.name))
+#all_categories = []
+#for c in :
+#    all_categories.append((c.pk, c.name))
 
 class CommentForm(forms.Form):
     author = forms.CharField(
@@ -21,6 +21,11 @@ class CommentForm(forms.Form):
     )
 
 class PostForm(forms.Form):
+
+    class CategoriesMultipleChoiceField(forms.ModelMultipleChoiceField):
+        def label_from_instance(self, obj):
+            return obj
+
     title = forms.CharField(
         max_length=60,
         widget=forms.TextInput(attrs={
@@ -36,8 +41,8 @@ class PostForm(forms.Form):
             "placeholder": "Write your post"
         })
     )
-    categories = forms.MultipleChoiceField(
+    categories = CategoriesMultipleChoiceField(
         widget=forms.CheckboxSelectMultiple,
-        choices=all_categories
+        queryset=Category.objects.all()
     )
     
