@@ -10,7 +10,11 @@ ADD /static ./static
 ADD /blog ./blog
 ADD /projects ./projects
 
-#RUN python manage.py makemigrations blog
-#RUN python manage.py migrate blog
+RUN python manage.py makemigrations blog
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+RUN export DJANGO_PRODUCTION=true
 
-#ENTRYPOINT ["python", "manage.py", "runserver"]
+EXPOSE 8000
+
+ENTRYPOINT ["python", "manage.py", "runserver", "0.0.0.0:8000"]
